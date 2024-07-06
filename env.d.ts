@@ -1,5 +1,5 @@
 namespace NodeJS {
     interface ProcessEnv {
-        NEXT_PUBLIC_GOOGLE_ANALYZER: string
+        NEXT_PUBLIC_SOCKET_SERVER: string
     }
 }
