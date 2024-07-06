@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputChat should take a snapshot 1`] = `
+<input
+  class="sc-c3462e41-0 fffEgn"
+  placeholder="test"
+  type="text"
+  value="test"
+/>
+`;

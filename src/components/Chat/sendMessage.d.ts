@@ -1,0 +1,3 @@
+type ChatProps = {
+    room: string
+}

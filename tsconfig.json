@@ -27,7 +27,8 @@
         "**/*.tsx",
         ".next/types/**/*.ts",
         "env.d.ts",
-        "playground.js"
+        "playground.js",
+        "src/server.js"
     ],
     "exclude": ["node_modules"]
 }

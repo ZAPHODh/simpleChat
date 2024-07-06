@@ -2,7 +2,7 @@
 
 exports[`Heading should match snapshot 1`] = `
 <h1
-  class="sc-9eb0259e-0 kSMpJi"
+  class="sc-ba81c2ff-0 jFApBo"
 >
   test
 </h1>
