@@ -11,6 +11,7 @@ export const Chat = ({ room }: ChatProps) => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (message === '') return
+        console.log(message)
         socket.emit('message', message)
         setMessage('')
     }
@@ -45,7 +46,7 @@ export const Chat = ({ room }: ChatProps) => {
             socket.off('disconnect', onDisconnect)
             socket.off('messageResponse', handleMessage)
         }
-    }, [])
+    }, [messages])
     return (
         <div>
             {messages.map((msg) => (
