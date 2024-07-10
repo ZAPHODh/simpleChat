@@ -48,7 +48,7 @@ export const Wrapper = styled.section`
     `}
 `
 
-export const MessageContainer = styled.div`
+export const MessageContainer = styled.form`
     ${({ theme }) => css`
         position: relative;
         display: flex;

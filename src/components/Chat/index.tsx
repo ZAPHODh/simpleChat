@@ -15,7 +15,7 @@ export const Chat = ({ room }: ChatProps) => {
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState<NewMessage[]>([])
 
-    const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (message === '' || !session || !session.user || !session.user.name)
             return
@@ -57,14 +57,14 @@ export const Chat = ({ room }: ChatProps) => {
                     </Styled.Message>
                 ))}
             </Styled.Messages>
-            <Styled.MessageContainer>
+            <Styled.MessageContainer onSubmit={onSubmit}>
                 <InputChat
                     onChange={onChange}
                     value={message}
                     placeholder="escreva sua mensagem"
                 />
-                <Styled.Button onClick={onClick}>
-                    <Send size={'inherit'} />
+                <Styled.Button>
+                    <Send size={'25px'} />
                 </Styled.Button>
             </Styled.MessageContainer>
         </Styled.Wrapper>
