@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { Heading } from '.'
-import { ThemeClient } from '../../theme/ThemeClient'
+import { ThemeClient } from '../../lib/theme/ThemeClient'
 
 describe('Heading', () => {
     it('should renders a heading', () => {

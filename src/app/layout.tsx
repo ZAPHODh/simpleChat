@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import StyledComponentsRegistry from '../lib/registry'
-import { GlobalStyles } from '../theme/globals'
-import { ThemeClient } from '../theme/ThemeClient'
+import { GlobalStyles } from '../lib/theme/globals'
+import { ThemeClient } from '../lib/theme/ThemeClient'
 import SessionWrapper from '@/components/SessionWrapper'
 
 const montserrat = Montserrat({

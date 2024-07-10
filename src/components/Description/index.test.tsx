@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { Description } from '.'
-import { ThemeClient } from '../../theme/ThemeClient'
+import { ThemeClient } from '../../lib/theme/ThemeClient'
 
 describe('Description', () => {
     it('should render the paragraph', () => {

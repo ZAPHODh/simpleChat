@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { InputChat } from '.'
-import { ThemeClient } from '../../theme/ThemeClient'
+import { ThemeClient } from '../../lib/theme/ThemeClient'
 
 describe('InputChat', () => {
     it('should render the InputChat', () => {

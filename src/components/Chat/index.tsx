@@ -5,10 +5,11 @@ import { InputChat } from '../InputChat'
 import * as Styled from './styles'
 import { Send } from '@styled-icons/boxicons-solid/Send'
 import { v4 as uuidv4 } from 'uuid'
-import { socket } from '@/socket'
 
 import { useSession } from 'next-auth/react'
+import { socket } from '@/lib/socket'
 const StyledName = dynamic(() => import('./styles').then((style) => style.Name))
+
 export const Chat = ({ room }: ChatProps) => {
     const { data: session } = useSession()
     const [message, setMessage] = useState('')
@@ -43,7 +44,7 @@ export const Chat = ({ room }: ChatProps) => {
     return (
         <Styled.Wrapper>
             <Styled.Messages>
-                {messages.map((msg, ingex) => (
+                {messages.map((msg) => (
                     <Styled.Message
                         $isMe={msg.name === session?.user?.name ? true : false}
                         key={uuidv4()}
