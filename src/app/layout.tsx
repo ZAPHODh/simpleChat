@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google'
 import StyledComponentsRegistry from '../lib/registry'
 import { GlobalStyles } from '../theme/globals'
 import { ThemeClient } from '../theme/ThemeClient'
+import SessionWrapper from '@/components/SessionWrapper'
 
 const montserrat = Montserrat({
     subsets: ['latin'],
@@ -21,15 +22,17 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="pt-BR">
-            <body className={montserrat.className}>
-                <ThemeClient>
-                    <StyledComponentsRegistry>
-                        {children}
-                    </StyledComponentsRegistry>
-                </ThemeClient>
-            </body>
-            <GlobalStyles />
-        </html>
+        <SessionWrapper>
+            <html lang="pt-BR">
+                <body className={montserrat.className}>
+                    <ThemeClient>
+                        <StyledComponentsRegistry>
+                            {children}
+                        </StyledComponentsRegistry>
+                    </ThemeClient>
+                </body>
+                <GlobalStyles />
+            </html>
+        </SessionWrapper>
     )
 }

@@ -2,7 +2,53 @@
 
 import styled, { css } from 'styled-components'
 
-export const MessageContainer = styled.form`
+export const Name = styled.p`
+    position: absolute;
+    top: -0.2rem;
+    left: 1rem;
+    font-size: 11px;
+`
+
+export const Message = styled.div<{ $isMe: boolean }>`
+    ${({ theme, $isMe }) => css`
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 10px;
+        border-radius: 10px;
+        margin: 10px;
+        min-height: 60px;
+        min-width: 150px;
+        background-color: ${$isMe ? 'black' : 'white'};
+        color: ${$isMe ? 'white' : 'black'};
+        align-self: ${$isMe ? 'flex-end' : 'flex-start'};
+    `}
+`
+export const Messages = styled.div`
+    ${({ theme }) => css`
+        min-height: 400px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: gray;
+        flex-direction: column;
+    `}
+`
+
+export const Wrapper = styled.section`
+    ${({ theme }) => css`
+        width: 400px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    `}
+`
+
+export const MessageContainer = styled.div`
     ${({ theme }) => css`
         position: relative;
         display: flex;
@@ -17,7 +63,7 @@ export const MessageContainer = styled.form`
 `
 export const Button = styled.button`
     ${({ theme }) => css`
-    background-color: ;
+        background-color:;
         padding: 5px;
         display: flex;
         align-items: center;

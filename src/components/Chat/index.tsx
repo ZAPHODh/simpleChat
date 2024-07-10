@@ -1,67 +1,71 @@
 'use client'
-
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { InputChat } from '../InputChat'
 import * as Styled from './styles'
 import { Send } from '@styled-icons/boxicons-solid/Send'
-import { socket } from '@/socket'
 import { v4 as uuidv4 } from 'uuid'
+import { socket } from '@/socket'
 
+import { useSession } from 'next-auth/react'
+const StyledName = dynamic(() => import('./styles').then((style) => style.Name))
 export const Chat = ({ room }: ChatProps) => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { data: session } = useSession()
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState<NewMessage[]>([])
+
+    const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        if (message === '') return
-        console.log(message)
-        socket.emit('message', message)
+        if (message === '' || !session || !session.user || !session.user.name)
+            return
+        const newMessage: NewMessage = { message, name: session.user.name }
+        socket.emit('message', newMessage)
         setMessage('')
     }
-    const [isConnected, setIsConnected] = useState(false)
-    const [message, setMessage] = useState('')
-    const [messages, setMessages] = useState<string[]>([])
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value)
     }
-    useEffect(() => {
-        const onConnect = () => {
-            setIsConnected(true)
-        }
-        if (socket.connected) {
-            onConnect()
-        }
 
-        const onDisconnect = () => {
-            setIsConnected(false)
-        }
-        const handleMessage = (msg: string) => {
-            console.log(msg)
+    useEffect(() => {
+        const handleMessage = (msg: NewMessage) => {
+            console.log('Message received:', msg)
             setMessages((prevMessages) => [...prevMessages, msg])
         }
-        socket.on('connect', onConnect)
+
         socket.on('messageResponse', handleMessage)
-        socket.on('disconnect', onDisconnect)
 
         return () => {
-            socket.off('connect', onConnect)
-            socket.off('disconnect', onDisconnect)
             socket.off('messageResponse', handleMessage)
         }
-    }, [messages])
+    }, [])
+
     return (
-        <div>
-            {messages.map((msg) => (
-                <p key={uuidv4()}>{msg}</p>
-            ))}
-            <Styled.MessageContainer onSubmit={onSubmit}>
+        <Styled.Wrapper>
+            <Styled.Messages>
+                {messages.map((msg, ingex) => (
+                    <Styled.Message
+                        $isMe={msg.name === session?.user?.name ? true : false}
+                        key={uuidv4()}
+                    >
+                        {msg.name !== session?.user?.name ? (
+                            <StyledName>{msg.name}</StyledName>
+                        ) : null}
+
+                        {msg.message}
+                    </Styled.Message>
+                ))}
+            </Styled.Messages>
+            <Styled.MessageContainer>
                 <InputChat
                     onChange={onChange}
                     value={message}
                     placeholder="escreva sua mensagem"
                 />
-                <Styled.Button>
+                <Styled.Button onClick={onClick}>
                     <Send size={'inherit'} />
                 </Styled.Button>
             </Styled.MessageContainer>
-        </div>
+        </Styled.Wrapper>
     )
 }
