@@ -1,4 +1,4 @@
 'use client'
 import { io } from 'socket.io-client'
 
-export const socket = io('http://localhost:4000')
+export const socket = io('https://1298-201-9-69-21.ngrok-free.app')
