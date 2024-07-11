@@ -41,11 +41,16 @@ export const Chat = ({ room }: ChatProps) => {
         const handleConnect = () => {
             socket.emit('join', room)
         }
+        const handleDisconnect = () => {
+            socket.emit('disconnect', room)
+        }
         socket.on('messageResponse', handleMessage)
         socket.on('connect', handleConnect)
+        socket.on('disconnect', handleDisconnect)
         return () => {
             socket.off('messageResponse', handleMessage)
             socket.off('connect', handleConnect)
+            socket.off('disconnect', handleDisconnect)
         }
     }, [room])
 
