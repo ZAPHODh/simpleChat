@@ -4,4 +4,5 @@ type ChatProps = {
 type NewMessage = {
     message: string
     name: string
+    room: string
 }

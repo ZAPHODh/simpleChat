@@ -1,6 +1,6 @@
 'use client'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { InputChat } from '../InputChat'
 import * as Styled from './styles'
 import { Send } from '@styled-icons/boxicons-solid/Send'
@@ -8,9 +8,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { useSession } from 'next-auth/react'
 import { socket } from '@/lib/socket'
+import { wrapTex } from '@/lib/wrapText'
 const StyledName = dynamic(() => import('./styles').then((style) => style.Name))
 
 export const Chat = ({ room }: ChatProps) => {
+    const messagesRef = useRef<HTMLDivElement>(null)
     const { data: session } = useSession()
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState<NewMessage[]>([])
@@ -19,7 +21,11 @@ export const Chat = ({ room }: ChatProps) => {
         e.preventDefault()
         if (message === '' || !session || !session.user || !session.user.name)
             return
-        const newMessage: NewMessage = { message, name: session.user.name }
+        const newMessage: NewMessage = {
+            message,
+            name: session.user.name,
+            room,
+        }
         socket.emit('message', newMessage)
         setMessage('')
     }
@@ -30,20 +36,27 @@ export const Chat = ({ room }: ChatProps) => {
 
     useEffect(() => {
         const handleMessage = (msg: NewMessage) => {
-            console.log('Message received:', msg)
             setMessages((prevMessages) => [...prevMessages, msg])
         }
-
+        const handleConnect = () => {
+            socket.emit('join', room)
+        }
         socket.on('messageResponse', handleMessage)
-
+        socket.on('connect', handleConnect)
         return () => {
             socket.off('messageResponse', handleMessage)
+            socket.off('connect', handleConnect)
         }
-    }, [])
+    }, [room])
+
+    useEffect(() => {
+        if (!messagesRef.current) return
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+    }, [messages])
 
     return (
         <Styled.Wrapper>
-            <Styled.Messages>
+            <Styled.Messages ref={messagesRef}>
                 {messages.map((msg) => (
                     <Styled.Message
                         $isMe={msg.name === session?.user?.name ? true : false}
@@ -53,7 +66,7 @@ export const Chat = ({ room }: ChatProps) => {
                             <StyledName>{msg.name}</StyledName>
                         ) : null}
 
-                        {msg.message}
+                        {wrapTex(msg.message, 35)}
                     </Styled.Message>
                 ))}
             </Styled.Messages>

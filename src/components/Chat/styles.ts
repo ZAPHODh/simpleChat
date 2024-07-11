@@ -11,15 +11,19 @@ export const Name = styled.p`
 
 export const Message = styled.div<{ $isMe: boolean }>`
     ${({ theme, $isMe }) => css`
+        text-align: justify;
+        word-wrap: break-word;
+        font-size: 15px;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding: 0 10px;
+        padding: 10px;
         border-radius: 10px;
         margin: 10px;
         min-height: 60px;
         min-width: 150px;
+        max-width: 100%;
         background-color: ${$isMe ? 'black' : 'white'};
         color: ${$isMe ? 'white' : 'black'};
         align-self: ${$isMe ? 'flex-end' : 'flex-start'};
@@ -27,9 +31,11 @@ export const Message = styled.div<{ $isMe: boolean }>`
 `
 export const Messages = styled.div`
     ${({ theme }) => css`
-        overflow: auto;
+        position: relative;
+        overflow-x: auto;
         height: 400px;
         width: 100%;
+        max-width: 400px;
         display: flex;
         align-items: center;
         justify-content: center;
