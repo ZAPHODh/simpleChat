@@ -27,6 +27,7 @@ export const Message = styled.div<{ $isMe: boolean }>`
 `
 export const Messages = styled.div`
     ${({ theme }) => css`
+        overflow: auto;
         min-height: 400px;
         width: 100%;
         display: flex;
