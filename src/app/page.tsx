@@ -1,6 +1,6 @@
 import { Chat } from '@/components/Chat'
 import { getServerSession } from 'next-auth'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 export default async function Home() {
@@ -12,7 +12,7 @@ export default async function Home() {
         <main>
             <Chat room={'room1'} />
             <br />
-            <Link href="/novasala">new room</Link>
+            <a href="/novasala">new room</a>
         </main>
     )
 }
