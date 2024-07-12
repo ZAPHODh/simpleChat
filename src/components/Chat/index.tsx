@@ -1,14 +1,17 @@
 'use client'
+
 import dynamic from 'next/dynamic'
+import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
-import { InputChat } from '../InputChat'
+
 import * as Styled from './styles'
 import { Send } from '@styled-icons/boxicons-solid/Send'
-import { v4 as uuidv4 } from 'uuid'
+import { InputChat } from '../InputChat'
 
-import { useSession } from 'next-auth/react'
+import { v4 as uuidv4 } from 'uuid'
 import { socket } from '@/lib/socket'
 import { wrapTex } from '@/lib/wrapText'
+
 const StyledName = dynamic(() => import('./styles').then((style) => style.Name))
 
 export const Chat = ({ room }: ChatProps) => {
@@ -48,6 +51,7 @@ export const Chat = ({ room }: ChatProps) => {
         socket.on('disconnect', handleDisconnect)
         socket.on('messageResponse', handleMessage)
         socket.on('connect', handleConnect)
+
         return () => {
             socket.off('messageResponse', handleMessage)
             socket.off('connect', handleConnect)
